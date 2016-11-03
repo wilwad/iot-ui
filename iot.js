@@ -12,40 +12,40 @@
  
  // define our controls
  var controls = [
-  						{'icon':'fa-tv fa-2x',
- 						 'text':'TV (Samsung)', 
- 						 'button':true,
- 						 'single':false,
- 						 'vibrate': true,
- 						 'color': 'blue',
- 						 'tip':'Turn lamp 2 ON or OFF',
- 						 'control':{'url_on':'', 
- 										'url_off':'',
- 										'method':'post'
- 										}, 
- 						 'status':{'url':'',
- 									  'method':'post',
- 									  'interval':600000
- 									 }
-  						 },
+				{'icon':'fa-tv fa-2x',
+				'text':'TV (Samsung)', 
+				'button':true,
+				'single':false,
+				'vibrate': true,
+				'color': 'blue',
+				'tip':'Turn lamp 2 ON or OFF',
+				'control':{'url_on':'', 
+							'url_off':'',
+							'method':'post'
+						}, 
+		  'status':{'url':'',
+					'method':'post',
+					'interval':600000
+ 			   }
+		 },
   						  
-					 {'icon':'fa-lightbulb-o fa-2x',
-                  'text':'LAMP #1', 
- 						'button':true,
- 						'single':false,
- 						'color': '#848484',
- 						'vibrate': false,
- 						'spin':false,
- 						'tip':'Turn lamp 1 ON or OFF',
- 						'control':{'url_on':'', 
- 									  'url_off':'',
- 									  'method':'post'
- 									 }, 
- 						'status':{'url':'',
- 									 'method':'post',
- 									 'interval':600000
- 									 }
- 						},
+		 {'icon':'fa-lightbulb-o fa-2x',
+			'text':'LAMP #1', 
+			'button':true,
+			'single':false,
+			'color': '#848484',
+			'vibrate': false,
+			'spin':false,
+			'tip':'Turn lamp 1 ON or OFF',
+			'control':{'url_on':'', 
+						'url_off':'',
+						'method':'post'
+						}, 
+			'status':{'url':'',
+						'method':'post',
+						'interval':600000
+						}
+		},
  						{
  						 'icon':'fa-lightbulb-o fa-2x',
  						 'text':'LAMP #2', 
@@ -115,17 +115,17 @@
  										  'interval':600000
  										  } 							 
  							}						
- 						];
+ 		];
   
   var panels = "";
   
   $(document).ready(function () {
   
 	  for (var idx = 0; idx < controls.length; idx++){
-	  		 var script        = "";
-	  		 var ctl           = "";
-	  		 var color         = controls[idx].color;
-	  		 var icon          = controls[idx].icon;
+	  	    var script        = "";
+	  	    var ctl           = "";
+	  	    var color         = controls[idx].color;
+	  	  var icon          = controls[idx].icon;
 	  	    var text          = controls[idx].text;
 	  	    var tip           = controls[idx].tip;
 	  	    var button        = controls[idx].button == true;

@@ -16,8 +16,8 @@ This is what I came up with, you may add more to it:
  'color': 'blue', /* default color when not clicked */
  'tip':'Turn lamp 2 ON or OFF', /* tooltip text */
  'control':{'url_on':'',  /* e.g. http://serverip:port/devs/toaster.php?on=1 */
-						'url_off':'', /* e.g. http://serverip:port/devs/toaster.php?on=0 */
-						'method':'post',
+	    'url_off':'', /* e.g. http://serverip:port/devs/toaster.php?on=0 */
+	    'method':'post',
             'arguments': '' /* e.g. on=this.val */
            	}, 
  'status':{'url':'', /* reads the status of the device on load/reset e.g. http://serverip:port/devs/toaster.php?q=status*/

@@ -1,4 +1,5 @@
- // Sample IoT UI using Bootstrap/Bootstrap switch/Jquery/Font awesome
+ // Sample IoT UI 
+ // Requires Bootstrap/ Bootstrap switch / Jquery / Font awesome
  // Originally PHP
  //
  // William Sengdara

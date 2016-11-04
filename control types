@@ -101,7 +101,7 @@
 			     break;
 			     
 		       case 'range':
-				ctl    = "<input type='range' id='chk"+idx+"'><script>$('#chk"+idx+"') <\/script>";
+				ctl    = "<input type='range' id='chk"+idx+"' min='"+min+"' max='"+max+"'><script>$('#chk"+idx+"') <\/script>";
 				script = "<script>$('#chk"+idx+"').on('change', function() {$('#icon"+idx+"').css('color','"+color+"');"+vibrate+"});<\/script>";		       
 		             break;
 			     

@@ -21,7 +21,7 @@
 				'vibrate': true,
 				'color': 'blue',
 				'tip':'Turn lamp 2 ON or OFF',
-				'control':{'url_on':'', 
+				'onchange':{'url_on':'', 
 							'url_off':'',
 							'method':'post'
 						}, 
@@ -40,7 +40,7 @@
 			'vibrate': false,
 			'spin':false,
 			'tip':'Turn lamp 1 ON or OFF',
-			'control':{'url_on':'', 
+			'onchange':{'url_on':'', 
 						'url_off':'',
 						'method':'post'
 						}, 
@@ -57,7 +57,7 @@
  						 'vibrate': false,
  						 'spin':false,
  						 'tip':'Turn lamp 2 ON or OFF',
- 						 'control':{'url_on':'', 
+ 						 'onchange':{'url_on':'', 
  										'url_off':'',
  										'method':'post'
  									  }, 
@@ -85,8 +85,8 @@
 		    var default        = controls[idx].default; // new
 		    
 	  	    var single        = controls[idx].single == true;
-	  	    var smart_control = controls[idx].control;
-	  	    var smart_status  = controls[idx].status;
+	  	    var onchange      = controls[idx].onchange;
+	  	    var status        = controls[idx].status;
 	  	    var vibrate       = controls[idx].vibrate == true;
 	  	    var spin          = controls[idx].spin    == true;
 
@@ -107,10 +107,10 @@
 			     
 		       case 'span':
 		           /* spans are for info */
-				if (smart_status){
-					var url      = smart_status.url || "";
-					var method   = smart_status.method || smart_status.method == 'post' ? 'post' : 'get';
-					var interval = smart_status.interval || 60000;
+				if (status){
+					var url      = status.url || "";
+					var method   = status.method || status.method == 'post' ? 'post' : 'get';
+					var interval = status.interval || 60000;
 	
 					if (url.trim().length){
 						script = "<script>function update"+idx+"(){ console.log($('div').length); $.ajax({type:'"+method+"', url: '"+url+"',success: function(data){ var cell = data.list[0].main.temp;cell = cell - 273.15; cell = Math.round(cell); $('#chk"+idx+"').html('<b>'+cell + '&deg;C'+'</b>');setTimeout(update"+idx+", "+interval+");},error: function(a,b,c){setTimeout(update"+idx+", "+interval+");}});} update"+idx+"();<\/script>";

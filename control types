@@ -1,5 +1,5 @@
 // Sample IoT UI 
-// Original had only two control types - A button or a span, here we define the control
+// Original had only two control types - A button or a span, here is how we would define more controls
 //
  // Requires Bootstrap/ Bootstrap switch / Jquery / Font awesome
  // Originally PHP
@@ -78,7 +78,12 @@
 	  	  var icon          = controls[idx].icon;
 	  	    var text          = controls[idx].text;
 	  	    var tip           = controls[idx].tip;
-	  	    var button        = controls[idx].button == true;
+		    
+	  	    var type        = controls[idx].type; // new
+		    var min        = controls[idx].min; //new
+		    var max        = controls[idx].max; // new
+		    var default        = controls[idx].default; // new
+		    
 	  	    var single        = controls[idx].single == true;
 	  	    var smart_control = controls[idx].control;
 	  	    var smart_status  = controls[idx].status;
@@ -89,11 +94,19 @@
 	  	    var icon = font_awesome(icon, idx, spin, color);
 	  	    vibrate = vibrate ? "if (state)vibrate();" : "";
 			
-			if (button){
+		    switch (type){
+		       case 'button':
 				ctl    = "<input type='checkbox' id='chk"+idx+"'><script>$('#chk"+idx+"').bootstrapSwitch();<\/script>";
 				script = "<script>$('#chk"+idx+"').on('switchChange.bootstrapSwitch', function(event, state) {$('#icon"+idx+"').css('color', state ? 'red' : '"+color+"');"+single+vibrate+"});<\/script>";
-					
-			} else {
+			     break;
+			     
+		       case 'range':
+				ctl    = "<input type='range' id='chk"+idx+"'><script>$('#chk"+idx+"') <\/script>";
+				script = "<script>$('#chk"+idx+"').on('change', function() {$('#icon"+idx+"').css('color','"+color+"');"+vibrate+"});<\/script>";		       
+		             break;
+			     
+		       case 'span':
+		           /* spans are for info */
 				if (smart_status){
 					var url      = smart_status.url || "";
 					var method   = smart_status.method || smart_status.method == 'post' ? 'post' : 'get';
@@ -105,8 +118,11 @@
 				}
 				
 				ctl = "<span class='statusinfo' id='chk"+idx+"'><span class='fa fa-spinner fa-spin'></span></span>";
-			}
-			
+		         break;
+			 
+		       default:
+		         break;
+		    }
 			panels += "<div class='panel-default'>" +
 	 		             "<div class='panel-body'>" +
 	 		               icon + " "+ text +

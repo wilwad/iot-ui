@@ -35,6 +35,7 @@
       'min': 0,
       'max':10,
       'default':5,
+      'step':1,
 			'single':false,
 			'color': '#848484',
 			'vibrate': false,
@@ -82,7 +83,7 @@
 	  	    var type        = controls[idx].type; // new
 		    var min        = controls[idx].min; //new
 		    var max        = controls[idx].max; // new
-		    var original   = controls[idx].default; // new
+		    var original    = controls[idx].default; // new
 		    
 	  	    var single        = controls[idx].single == true;
 	  	    var onchange      = controls[idx].onchange;
@@ -92,17 +93,17 @@
 
 	  	    var single = single ? "setTimeout(function(){\$('#chk"+idx+"').bootstrapSwitch('state', false, false)}, 1000);" : "";
 	  	    var icon = font_awesome(icon, idx, spin, color);
-	  	    vibrate = vibrate ? "if (state)vibrate();" : "";
+	  	    vibrate = vibrate ? "if(state)vibrate();" : "";
 			
 		    switch (type){
 		       case 'button':
 				ctl    = "<input type='checkbox' id='chk"+idx+"'><script>$('#chk"+idx+"').bootstrapSwitch();<\/script>";
-				script = "<script>$('#chk"+idx+"').on('switchChange.bootstrapSwitch', function(event, state) {$('#icon"+idx+"').css('color', state ? 'red' : '"+color+"');"+single+vibrate+"});<\/script>";
+				script = "<script>$('#chk"+idx+"').on('switchChange.bootstrapSwitch', function(event, state) {$('#icon"+idx+"').css('color', state ? 'red' : '"+color+"');"+single+vibrate+";});<\/script>";
 			     break;
 			     
 		       case 'range':
-				ctl    = "<input type='range' id='chk"+idx+"' min='"+min+"' max='"+max+"'><script>$('#chk"+idx+"') <\/script>";
-				script = "<script>$('#chk"+idx+"').on('change', function() {$('#icon"+idx+"').css('color','"+color+"');"+vibrate+"});<\/script>";		       
+				ctl    = "<input type='range' id='chk"+idx+"' min='"+min+"' max='"+max+"' value='"+original+"'><script><\/script>";
+				script = "<script>$('#chk"+idx+"').on('change', function() {var val=$(this).val(); console.log('range',val); $('#icon"+idx+"').css('color',val>0?'red':'"+color+"');}); /* trigger with current val */ $('#chk"+idx+"').trigger('change');<\/script>";		       
 		             break;
 			     
 		       case 'span':
@@ -120,10 +121,10 @@
 				ctl = "<span class='statusinfo' id='chk"+idx+"'><span class='fa fa-spinner fa-spin'></span></span>";
 		         break;
 			 
-		       default:
+		       original:
 		         break;
 		    }
-			panels += "<div class='panel-default'>" +
+			panels += "<div class='panel-original'>" +
 	 		             "<div class='panel-body'>" +
 	 		               icon + " "+ text +
 	 		               "<span class='pull-right' data-toggle='tooltip' title='"+tip+"'>" +

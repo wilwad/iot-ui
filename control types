@@ -82,7 +82,7 @@
 	  	    var type        = controls[idx].type; // new
 		    var min        = controls[idx].min; //new
 		    var max        = controls[idx].max; // new
-		    var default        = controls[idx].default; // new
+		    var original   = controls[idx].default; // new
 		    
 	  	    var single        = controls[idx].single == true;
 	  	    var onchange      = controls[idx].onchange;

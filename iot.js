@@ -48,6 +48,22 @@
 						'method':'post',
 						'interval':600000}
 		        },
+                     {'icon':'fa-video-camera fa-2x',
+                        'text':'Video #1',
+                        'type':'popup',
+                        'deviceid': 'video1',
+                        'single':true,
+                        'color': '#848484',
+                        'vibrate': true,
+                        'tip':'Open video feed',
+                                'onchange':{'url':'http://localhost/iot/device-api.php',
+                                                'data': {'deviceid': '0x0', 'state': '0x0'},
+                                                'method':'post'
+                                                },
+                                'status':{'url':'',
+                                                'method':'post',
+                                                'interval':600000}
+                        },
 		     {'icon':'fa-bell-o fa-2x',
 			'text':'Ring bell', 
 			'type':'button',
@@ -154,7 +170,7 @@
 			
 	  	    var single = single ? "setTimeout(function(){\$('#chk"+idx+"').bootstrapSwitch('state', false, false)}, 1000);" : "";
 	  	    var icon = font_awesome(icon, idx, color);
-	  	    vibrate = vibrate ? "if(state)vibrate();" : "";
+	  	    vibrate = vibrate ? "vibrate();" : "";
 			
 		    switch (type){
 		       case 'button':
@@ -163,10 +179,10 @@
 					console.log('url',onchange_url.trim().length);
 					
 					if (onchange_url.trim().length){
-						script = "<script>$('#chk"+idx+"').on('switchChange.bootstrapSwitch', function(event, state) { console.log('state change',state); onchange"+idx+"(state); $('#icon"+idx+"').css('color', state ? 'red' : '"+color+"');"+single+vibrate+";});";
-						script += "function onchange"+idx+"(state){ var url='"+onchange_url+"'; var data = datas["+idx+"]; /* substitute */ data.state = state;  console.log('onchange',data, url); $.ajax({type:'"+onchange_method+"',data: data, url: url, success: function(data){console.log('ajax',data); },error: function(xhr,b,text){ console.error('ajax error',xhr.statusText);} });}<\/script>";
+						script = "$('#chk"+idx+"').on('switchChange.bootstrapSwitch', function(event, state) { console.log('state change',state); onchange"+idx+"(state); $('#icon"+idx+"').css('color', state ? 'red' : '"+color+"');"+single+vibrate+";});";
+						script += "function onchange"+idx+"(state){ var url='"+onchange_url+"'; var data = datas["+idx+"]; /* substitute */ data.state = state;  console.log('onchange',data, url); $.ajax({type:'"+onchange_method+"',data: data, url: url, success: function(data){console.log('ajax',data); },error: function(xhr,b,text){ console.error('ajax error',xhr.statusText);} });}";
 					} else {
-						script = "<script>$('#chk"+idx+"').on('switchChange.bootstrapSwitch', function(event, state) { console.log('state change',state); $('#icon"+idx+"').css('color', state ? 'red' : '"+color+"');"+single+vibrate+";});<\/script>";
+						script = "$('#chk"+idx+"').on('switchChange.bootstrapSwitch', function(event, state) { console.log('state change',state); $('#icon"+idx+"').css('color', state ? 'red' : '"+color+"');"+single+vibrate+";});";
 					}
 			     break;
 			     
@@ -176,15 +192,15 @@
 					if (onchange_url.trim().length){
 					}
 					else {
-						script = "<script>$('#chk"+idx+"').on('change mousemove', function() {var val=$(this).val(); console.log('range',val); $('#icon"+idx+"').css('color',val>0?'red':'"+color+"');}); /* trigger with current val */ $('#chk"+idx+"').trigger('change');<\/script>";
-						script += "<script>function onchange"+idx+"(state){ var data = datas["+idx+"]; /* substitute */ data.state = state;  $.ajax({type:'"+method+"',data: data, url: '"+url+"',success: function(data){ },error: function(a,b,c){} });}<\/script>";
+						script = "$('#chk"+idx+"').on('change mousemove', function() {var val=$(this).val(); console.log('range',val); $('#icon"+idx+"').css('color',val>0?'red':'"+color+"');}); /* trigger with current val */ $('#chk"+idx+"').trigger('change');";
+						script += "function onchange"+idx+"(state){ var data = datas["+idx+"]; /* substitute */ data.state = state;  $.ajax({type:'"+method+"',data: data, url: '"+url+"',success: function(data){ },error: function(a,b,c){} });}";
 					}		       
 		         break;
 			     
 		       case 'span':
 		           /* spans are for info */
 					if (status_url.trim().length){
-						script = "<script>function update"+idx+"(){ console.log($('div').length); $.ajax({type:'"+status_method+"', url: '"+status_url+"',success: function(data){ var cell = data.list[0].main.temp;cell = cell - 273.15; cell = Math.round(cell); $('#chk"+idx+"').html('<b>'+cell + '&deg;C'+'</b>');setTimeout(update"+idx+", "+status_interval+");},error: function(a,b,c){setTimeout(update"+idx+", "+status_interval+");}});} update"+idx+"();<\/script>";
+						script = "function update"+idx+"(){ console.log($('div').length); $.ajax({type:'"+status_method+"', url: '"+status_url+"',success: function(data){ var cell = data.list[0].main.temp;cell = cell - 273.15; cell = Math.round(cell); $('#chk"+idx+"').html('<b>'+cell + '&deg;C'+'</b>');setTimeout(update"+idx+", "+status_interval+");},error: function(a,b,c){setTimeout(update"+idx+", "+status_interval+");}});} update"+idx+"();";
 					}
 
 				ctl = "<span class='statusinfo' id='chk"+idx+"'><span class='fa fa-spinner fa-spin'></span></span>";
@@ -201,7 +217,10 @@
 	 		               "</span>" +
 	 		               "<p></p>" +
 	 		             "</div>" +
-			            "</div>" + script;
+			            "</div>" + 
+                                    "<script>" + 
+                                      script +
+                                    "</script>";
 	  }  
 	  
 	 $('#pane').html(panels);  	
